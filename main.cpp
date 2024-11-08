@@ -1,105 +1,113 @@
-#include "Lab2.h"
-#include "fun.h"
-#include <cmath>
-#include <deque>
-#include <iostream>
-#include <list>
+#include "Lab4.h"
 #include <vector>
 
 int main() {
   int choice;
+  std::cout << "Число 0 выйти,  1 решить уравнение, 2 увеличить коэффициенты "
+               "на 1, 3 уменьшить на 1"
+            << '\n';
+  std::cout << " 4 неявное приведение к double, 5 явное приведение к bool"
+            << '\n';
+  std::cout
+      << "6 проверка равенства уравнений, 7 проверка неравенства уравнений"
+      << '\n';
+  std::cout << "8 проверка конструктора с одинаковыми коэффициентами, 9 "
+               "проверка конструктора, когда есть числа до создания объекта."
+            << '\n';
   do {
-    choice = input(choice, "Введите номер задания от 1 до 10: ");
+    std::cout << "Введите число того что хотите проверить: ";
+    std::cin >> choice;
     switch (choice) {
     case 0:
       break;
     case 1: {
-      std::deque<int> D;
-      inputDec(D);
-      ReverseDec(D);
+      QadraticEquation equation("true");
+      std::vector<double> ask = equation.solution();
+      if (ask.size() == 0)
+        std::cout << "Действительных корней уравнения нет." << '\n';
+      else if (ask.size() == 1)
+        std::cout << "Уравнение иммет один корень " << ask[0] << '\n';
+      else
+        std::cout << "Уравнение имеет два корня " << ask[0] << " и " << ask[1]
+                  << '\n';
       break;
     }
     case 2: {
-      std::vector<int> V;
-      inputVector(V);
-      outputVector(V);
+      double a, b, c;
+      QadraticEquation equation("true");
+      ++equation;
+      std::cout << "Коэффициенты после прибавления 1: " << '\n';
+      equation.input();
       break;
     }
     case 3: {
-      std::deque<int> D;
-      inputDec(D);
-      DeleteMiddleDec(D);
-      outputDec(D);
-      break;
-    }
-    case 4: {
-      std::string file;
-      int k;
-      file = input(file, "Введите имя файла с его расширением: ");
-      k = input(k, "Введите количество звездочек: ");
-      WriteToFile(file, k);
-      std::cout << "Звёздочки успешно записаны." << '\n';
-      break;
-    }
-    case 5: {
-      std::vector<int> V;
-      std::list<int> L;
-      inputVector(V);
-      inputList(L);
-      DuplicationFirst(V, L);
-      outputList(L);
-      break;
-    }
-    case 6: {
-      int k;
-      std::list<int> L1, L2;
-      k = input(k, "Введите сдвиг: ");
-      inputList(L1, "Введите число: ", true, 10);
-      inputList(L2, "Введите число: ", true, 10);
-      Shift(L1, L2, k);
-      std::cout << "Новые списки: ";
-      outputList(L1);
-      outputList(L2);
-      break;
-    }
-    case 7: {
-      std::vector<int> V;
-      inputVector(V);
-      ThreeElem(V);
-      break;
-    }
-    case 8: {
-      std::list<int> L;
-      std::vector<int> V;
-      inputList(L);
-      ArithmeticMean(V, L);
-      std::cout << "Получившийся вектор: ";
-      outputVector(V);
-      break;
-    }
-    case 9: {
-      int k;
-      std::vector<int> V0;
-      inputVector(V0);
-      k = input(k, "Введите количество векторов: ");
-      std::vector<std::vector<int>> Vi;
-      for (int i = 0; i < k; i++) {
-        inputVector(Vi[i]);
-      }
-      k = SearchCountVec(V0, Vi);
-      std::cout << "Кол-во векторов содержащих все элементы V0: " << k << '\n';
-      break;
-    }
-    case 10: {
-      std::vector<std::string> V;
-      std::map<char, int> M;
-      inputVector(V, "Введите слово английскими заглавнми буквами: ");
-      CountQuantities(V, M);
+      QadraticEquation equation("true");
+      --equation;
+      std::cout << "Коэффициенты после минус 1: " << '\n';
+      equation.input();
       break;
     }
 
+    case 4: {
+      QadraticEquation equation("true");
+      double discr = equation;
+      std::cout << "Неявное приведение к double. Дискриминант: " << discr
+                << '\n';
+      break;
+    }
+    case 5: {
+      QadraticEquation equation("true");
+      bool ask{static_cast<bool>(equation)};
+      std::cout
+          << "Явное преобразование в bool. Если есть решения то 1 иначе 0: "
+          << ask << '\n';
+      break;
+    }
+    case 6: {
+      QadraticEquation equation("true");
+      QadraticEquation equation2("true");
+      bool ask = equation == equation2;
+      std::cout << "Если коэффициенты уравнений равны то 1 иначе 0: " << ask
+                << '\n';
+      break;
+    }
+    case 7: {
+      QadraticEquation equation("true");
+      QadraticEquation equation2("true");
+      bool ask = equation != equation2;
+      std::cout << "Если коэффициенты уравнений равны то 0 иначе 1: " << ask
+                << '\n';
+      break;
+    }
+    case 8: {
+      double x;
+      std::cout << "Введите какие коэффициенты будут у уравнения: ";
+      std::cin >> x;
+      QadraticEquation equation(x);
+      std::cout << "Вот такие коэффициенты при использования конструктора с "
+                   "одинаковыми коэффициентами: ";
+      equation.input();
+      break;
+    }
+
+    case 9: {
+      double a, b, c;
+      std::cout << "Введите первое число: ";
+      std::cin >> a;
+      std::cout << "Введите второе число: ";
+      std::cin >> b;
+      std::cout << "Введите второе число:";
+      std::cin >> c;
+      QadraticEquation equation(a, b, c);
+      std::cout << "Пример как создаётся уравнение конструктором, который "
+                   "принимает 3 коэффициента а не ввод: ";
+      equation.input();
+      break;
+    }
     default:
-      std::cout << "Ошибка! такого задания нет.";
+      std::cout << "Ошибка ввода!";
     }
   } while (choice != 0);
+
+  return 0;
 }

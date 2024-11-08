@@ -9,17 +9,6 @@ template <typename T> T input(T a, std::string str = "Введите число:
   return a;
 }
 
-int *inputArr(int *count) {
-  std::cout << "Введите кол-во чисел в массиве: ";
-  std::cin >> *count;
-  int *arr{new int[*count]};
-  for (int i = 0; i < *count; i++) {
-    std::cout << "Введите элемент массива: ";
-    std::cin >> arr[i];
-  }
-  return arr;
-}
-
 template <typename T>
 void inputVector(std::vector<T> &V,
                  std::string str = "Введите число: ", bool min = false,
@@ -54,7 +43,6 @@ void inputDec(std::deque<T> &D,
   do {
     k = input(k, "Введите количество элементов в деке: ");
   } while (k < min_k || min);
-
   for (int i = 0; i < k; i++) {
     T num = input(num, str);
     D.push_back(num);
